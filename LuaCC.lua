@@ -1,10 +1,10 @@
 -- CLua
---Change with your project name the PROJECTNAME from 315 and 279
---Also is recommended to be an intermediare scripter to change values from here
-local CLuaDecode = function(Code)
+--It's recommended to be an intermediare scripter to change values from here
+require'LuaMinify'
+local LuaCCDecode = function(Code)
                 assert(Code, "The code must be a non-nil value")
                 assert(type(Code) == "string", "Attempt to compile a non-string value")
-          local Classes = {
+                local Classes = {
 			bool = function(x)
 				return x ~= nil and x ~= false
 			end;
@@ -25,7 +25,7 @@ local CLuaDecode = function(Code)
   --Change the values down here
                 Syntax = {
                 	["IF"] = "if",
-                    ["FUNCTION"] = "function",
+                        ["FUNCTION"] = "function",
                 	["DO"] = "do",
                 	["THEN"] = "then",
                 	["WHILE"] = "while",
@@ -42,9 +42,9 @@ local CLuaDecode = function(Code)
                 	["FOR"] = "for",
                 	["REPEAT"] = "repeat",
                 	["RETURN"] = "return",
-                    ["REQUIRE"] = "require",
+                        ["REQUIRE"] = "require",
                 	["IN"] = "in",
-                	["UNTIL"] = "until",
+                	["UNTIL"] = "until";
 }
 		local Types = {
 			["string"] = true;
@@ -56,7 +56,7 @@ local CLuaDecode = function(Code)
 	local CaseSensitive = true
 	local UnaryOperators = true
 	local AgumentedOperators = true
-	local Minify = true
+	local Minify = false
 	
 	local BuiltIn = [[  ]]
 		
@@ -260,28 +260,58 @@ local CLuaDecode = function(Code)
 					Compiled = Compiled .. l
 				end
 			end
+--Formater
+local function getCount(lookIn, findString)
+	local c = 0;
+	local w = "";
+	for m1, m2 in lookIn:gmatch("([%w]*)"..findString.."(%w*)") do
+		if ((m1 == "") and (m2 == "")) then
+			c = c + 1;
+		end
+	end
+	return c;
+end
+
+local function autoFormat(c, tabChar)
+	tabChar = tabChar or "\t";
+	local newCode = { };
+	local curTabAmount = 0;
+	if (not c:match("^.-\n$")) then
+		c = c.."\n";
+	end
+	for ln in c:gmatch("(.-)\n") do
+		ln = ln:gsub("^%s*(.+)", "%1");
+		local oldTabAmount = curTabAmount;
+		local totCount = getCount(ln, "function") + getCount(ln, "if") + getCount(ln, "do") + getCount(ln, "repeat") - getCount(ln, "end") - getCount(ln, "until");
+		curTabAmount = curTabAmount + totCount;
+		ln = tabChar:rep((totCount > 0) and oldTabAmount or curTabAmount)..ln;
+		newCode[#newCode + 1] = ln;
+	end
+	newCode[#newCode + 1] = "";
+	return table.concat(newCode, "\n");
+end
 
 			-- Run script
 			Compiled = BuiltIn..Compiled
 			local Func, Error = loadstring(Compiled)
 			if Func then
 				if CaseSensitive == true then
-				minified = minified
-		        elseif CaseSensitive == false then
-				minified = minified:lower()
+	                elseif CaseSensitive == false then
+				Compiled = Compiled:lower()
+		                Compiled = "_version = _VERSION"..Compiled
 				end
 				if Minify == true then
                 _,minified = LuaMinify(Compiled)
                 else
-                minified = Compiled
+                minified = autoFormat(Compiled)
                 end
-				return minified
+			return minified
 			else
 				return Compiled, error("An error have occured!")
 			end
 end
 
-PROJECTNAME = {
+LuaCC = {
 Compile = function(file,name )
    assert(file, "The code must be a non-nil value")
    assert(type(file) == "string", "Attempt to compile a non-string value")
@@ -295,8 +325,9 @@ Compile = function(file,name )
 	  newfilename = filename
 else newfilename = filename..".lua"
 end
-   newfile=io.open(newfilename, "w")
-   newfile:write(CLuaDecode(code))
+   newfile=io.open(newfilename, "w+")
+   newfile:write(LuaCCDecode(code))
+   newfile:close()
 end;
 
 Execute = function(file)
@@ -306,16 +337,13 @@ Execute = function(file)
    x = io.open(file)
    code = x:read("*all")
    x:close()
-   loadstring(CLuaDecode(code))()
+   loadstring(LuaCCDecode(code))()
 end;
 
 Run = function(Code)
-	Code = Code
-	assert(Code, "The code must be a non-nil value")
-        assert(type(Code) == "string", "Attempt to compile a non-string value")
-	loadstring(CLuaDecode(Code))()
+	loadstring(LuaCCDecode(Code))()
 end;
 }
 mt = {__metatable = true}
-setmetatable(PROJECTNAME,mt)
+setmetatable(LuaCC,mt)
 
