@@ -1,7 +1,6 @@
 --LuaCC
 --It's recommended to be an intermediare scripter to change values from here
-require'LuaMinify'
-
+require 'LuaMinify'
 FileExtension = ".luacc" -- Change it with your own file extension 
 
 local LuaCCDecode = function(Code)
@@ -233,7 +232,7 @@ local LuaCCDecode = function(Code)
 		elseif l == ":" and VariableClasses then
 			for j = 1, Compiled:len() do
 				if loadstring("x=(" .. Compiled:sub(j) .. ")") then
-					Compiled = Compiled:sub(1, j - 1) .. "Classes." .. preCompiled[i + 1] .. "(" .. Compiled:sub(j) .. ")"
+					Compiled = Compiled:sub(1, j - 1) .. " Classes." .. preCompiled[i + 1] .. "(" .. Compiled:sub(j) .. ")"
 					preCompiled[i + 1] = nil
 					break
 				end
@@ -281,9 +280,9 @@ local LuaCCDecode = function(Code)
 		else
 			minified = Compiled
 		end
-		return minified, print("The code have been succesfully compiled")
+		return minified, true
 	else
-		return Compiled, error("An error have occured!")
+		return Compiled, false
 	end
 end
 											
@@ -323,4 +322,5 @@ LuaCC = {
 }
 mt = {__metatable = true}
 setmetatable(LuaCC,mt)
+
 return LuaCC
