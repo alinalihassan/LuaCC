@@ -37,6 +37,7 @@ local LuaCCDecode = function(Code)
 	   ["AND"] = "and",
 	   ["OR"] = "or",
 	   ["LOCAL"] = "local",
+	   ["GLOBAL"] = "_G."
 	   ["TRUE"] = "true",
 	   ["FALSE"] = "false",
 	   ["BREAK"] = "break",
@@ -207,7 +208,9 @@ local LuaCCDecode = function(Code)
 		elseif l == Syntax.UNTIL then
 			l = "until"
 			Compiled = Compiled .. l
-										
+		elseif l == Syntax.GLOBAL then
+			l = "_G."
+			Compiled = Compiled .. l				
 											
 											
 		-- Augmented assignment operators
