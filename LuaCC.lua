@@ -1,9 +1,8 @@
 --LuaCC
 --It's recommended to be an intermediare scripter to change values from here
---Change with your file extension at LuaCC.Compile and LuaCC.Execute at string.find(file, ".luacc")
 require'LuaMinify'
 
-FileExtension = ".luacc"
+FileExtension = ".luacc" -- Change it with your own file extension 
 
 local LuaCCDecode = function(Code)
 	assert(Code, "The code must be a non-nil value")
@@ -245,7 +244,6 @@ local LuaCCDecode = function(Code)
 			for j = #preCompiled, i, -1 do
 				local xCompiled = ""
 				for k = i + 1, j do
-					if preCompiled[k] == "{" then break end
 					xCompiled = xCompiled .. preCompiled[k] .. " "
 				end
 				if loadstring("x=(" .. xCompiled .. ")") then
@@ -325,5 +323,4 @@ LuaCC = {
 }
 mt = {__metatable = true}
 setmetatable(LuaCC,mt)
-
 return LuaCC
