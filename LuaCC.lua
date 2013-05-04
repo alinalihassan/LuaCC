@@ -47,7 +47,8 @@ local LuaCCDecode = function(Code)
 	   ["RETURN"] = "return",
 	   ["REQUIRE"] = "require",
 	   ["IN"] = "in",
-	   ["UNTIL"] = "until";
+	   ["UNTIL"] = "until",
+	   ["CLASSES"] = ":";
 	}
 	local Types = {
 	   ["string"] = true;
@@ -229,7 +230,7 @@ local LuaCCDecode = function(Code)
 			end
 											
 		-- Specific classes
-		elseif l == ":" and VariableClasses then
+		elseif l == Syntax.CLASSES and VariableClasses then
 			for j = 1, Compiled:len() do
 				if loadstring("x=(" .. Compiled:sub(j) .. ")") then
 					Compiled = Compiled:sub(1, j - 1) .. " Classes." .. preCompiled[i + 1] .. "(" .. Compiled:sub(j) .. ")"
