@@ -64,7 +64,7 @@ local LuaCCDecode = function(Code)
 	local BuiltIn = [[  ]]
 						
 	local Replace = {
-		-- ["_VERSION"] = 'PROJECTNAME.VERSION';
+		["_VERSION"] = "1.0";
 	};
 	local Ignore = {
 		{Start = "'", End = "'", Compile = true};
