@@ -1,6 +1,6 @@
 --LuaCC
 --It's recommended to be an intermediare scripter to change values from here
-require 'LuaMinify'
+require'LuaMinify'
 FileExtension = ".luacc" -- Change it with your own file extension 
 
 local LuaCCDecode = function(Code)
@@ -27,29 +27,28 @@ local LuaCCDecode = function(Code)
 		
 	--Change the values down here
 	local Syntax = {
-	   ["IF"] = "if",
-           ["FUNCTION"] = "function",
-	   ["DO"] = "do",
-	   ["THEN"] = "then",
-	   ["WHILE"] = "while",
-	   ["NIL"] = "nil",
-	   ["NOT"] = "not",
-	   ["AND"] = "and",
-	   ["OR"] = "or",
-	   ["LOCAL"] = "local",
+	   ["if"] = "if",
+       ["function"] = "function",
+	   ["do"] = "do",
+	   ["then"] = "then",
+	   ["while"] = "while",
+	   ["nil"] = "nil",
+	   ["not"] = "not",
+	   ["and"] = "and",
+	   ["or"] = "or",
+	   ["local"] = "local",
 	   ["_G."] = "_G.",
-	   ["TRUE"] = "true",
-	   ["FALSE"] = "false",
-	   ["BREAK"] = "break",
-	   ["ELSE"] = "else",
-	   ["ELSEIF"] = "elseif",
-	   ["FOR"] = "for",
-	   ["REPEAT"] = "repeat",
-	   ["RETURN"] = "return",
-	   ["REQUIRE"] = "require",
-	   ["IN"] = "in",
-	   ["UNTIL"] = "until",
-	   ["CLASSES"] = ":";
+	   ["true"] = "true",
+	   ["false"] = "false",
+	   ["break"] = "break",
+	   ["else"] = "else",
+	   ["elseif"] = "elseif",
+	   ["for"] = "for",
+	   ["repeat"] = "repeat",
+	   ["return"] = "return",
+	   ["require"] = "require",
+	   ["in"] = "in",
+	   ["until"] = "until",
 	}
 	local Types = {
 	   ["string"] = true;
@@ -140,81 +139,20 @@ local LuaCCDecode = function(Code)
 	-- Compile
 	for i, l in pairs(preCompiled) do
 		Compiled = Compiled .. " "
-		if not l then
-			
-		elseif l == Syntax.FUNCTION then
-			l = "function"
-			isFunc = true
-			Compiled = Compiled .. l
-		elseif l == Syntax.IF then
-			l = "if"
-			isThen = true
-			Compiled = Compiled .. l
-		elseif l == Syntax.FOR then
-			l = "for"
-			isDo = true
-			Compiled = Compiled .. l
-		elseif l == Syntax.DO then
-			l = "do"
-			Compiled = Compiled .. l
-		elseif l == Syntax.THEN then
-			l = "then"
-			Compiled = Compiled .. l
-		elseif l == Syntax.WHILE then
-			l = "while"
-			Compiled = Compiled .. l
-		elseif l == Syntax.NIL then
-			l = "nil"
-			Compiled = Compiled .. l
-		elseif l == Syntax.NOT then
-			l = "not"
-			Compiled = Compiled .. l
-		elseif l == Syntax.AND then
-			l = "and"
-			Compiled = Compiled .. l
-		elseif l == Syntax.OR then
-			l = "or"
-			Compiled = Compiled .. l
-		elseif l == Syntax.LOCAL then
-			l = "local"
-			Compiled = Compiled .. l
-		elseif l == Syntax.TRUE then
-			l = "true"
-			Compiled = Compiled .. l
-		elseif l == Syntax.FALSE then
-			l = "false"
-			Compiled = Compiled .. l
-		elseif l == Syntax.BREAK then
-			l = "break"
-			Compiled = Compiled .. l
-		elseif l == Syntax.ELSE then
-			l = "else"
-			Compiled = Compiled .. l				
-		elseif l == Syntax.ELSEIF then
-			l = "elseif"
-			Compiled = Compiled .. l
-		elseif l == Syntax.REPEAT then
-			l = "repeat"
-			Compiled = Compiled .. l				
-		elseif l == Syntax.RETURN then
-			l = "return"
-			Compiled = Compiled .. l
-		elseif l == Syntax.IN then
-			l = "in"
-			Compiled = Compiled .. l
-		elseif l == Syntax.REQUIRE then
-			l = "require"
-			Compiled = Compiled .. l
-		elseif l == Syntax.UNTIL then
-			l = "until"
-			Compiled = Compiled .. l
-		elseif l == Syntax["_G."] then
-			l = "_G."
-			Compiled = Compiled .. l				
+		if l then
+		
+		for i,v in pairs(Syntax) do
+			if l == v then
+			   if i == Syntax["function"] then
+			   		isFunc = true
+			   end	
+			   l = i
+			end
+		end	
 											
 											
 		-- Augmented assignment operators
-		elseif l == "+=" and AgumentedOperators or l == "-=" and AgumentedOperators or l == "*=" and AgumentedOperators or l == "/=" and AgumentedOperators or l == ".=" and AgumentedOperators then
+		if l == "+=" and AgumentedOperators or l == "-=" and AgumentedOperators or l == "*=" and AgumentedOperators or l == "/=" and AgumentedOperators or l == ".=" and AgumentedOperators then
 			for j = 1, Compiled:len() do
 				if loadstring("x=(" .. Compiled:sub(j) .. ")") then
 					local Operator = l == ".=" and ".." or l:sub(1, 1)
@@ -233,7 +171,7 @@ local LuaCCDecode = function(Code)
 			end
 											
 		-- Specific classes
-		elseif l == Syntax.CLASSES and VariableClasses then
+		elseif l == ":" and VariableClasses then
 			for j = 1, Compiled:len() do
 				if loadstring("x=(" .. Compiled:sub(j) .. ")") then
 					Compiled = Compiled:sub(1, j - 1) .. " Classes." .. preCompiled[i + 1] .. "(" .. Compiled:sub(j) .. ")"
@@ -266,6 +204,7 @@ local LuaCCDecode = function(Code)
 		else
 			Compiled = Compiled .. l
 			
+		end
 		end
 	end
 
