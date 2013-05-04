@@ -312,7 +312,7 @@ LuaCC = {
 	Execute = function(file)
 		assert(file, "The code must be a non-nil value")
 		assert(type(file) == "string", "Attempt to compile a non-string value")
-		assert(string.find(file,FileExtension, "Attempt to execute another type of file")
+		assert(string.find(file,FileExtension), "Attempt to execute another type of file")
 		x = io.open(file)
 		code = x:read("*all")
 		x:close()
