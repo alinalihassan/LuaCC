@@ -280,9 +280,9 @@ local LuaCCDecode = function(Code)
 		else
 			minified = Compiled
 		end
-		return minified, true
+		return minified
 	else
-		return Compiled, false
+		return Compiled, error("An error have occured while compiling")
 	end
 end
 											
