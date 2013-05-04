@@ -1,6 +1,7 @@
 --LuaCC
 --It's recommended to be an intermediare scripter to change values from here
 --Change with your file extension at LuaCC.Compile and LuaCC.Execute at string.find(file, ".luacc")
+require'LuaMinify'
 local LuaCCDecode = function(Code)
 	assert(Code, "The code must be a non-nil value")
 	assert(type(Code) == "string", "Attempt to compile a non-string value")
