@@ -2,6 +2,9 @@
 --It's recommended to be an intermediare scripter to change values from here
 --Change with your file extension at LuaCC.Compile and LuaCC.Execute at string.find(file, ".luacc")
 require'LuaMinify'
+
+FileExtension = ".luacc"
+
 local LuaCCDecode = function(Code)
 	assert(Code, "The code must be a non-nil value")
 	assert(type(Code) == "string", "Attempt to compile a non-string value")
@@ -290,7 +293,7 @@ LuaCC = {
 	Compile = function(file,name )
 		assert(file, "The code must be a non-nil value")
 		assert(type(file) == "string", "Attempt to compile a non-string value")
-		assert(string.find(file,".luacc"), "Attempt to compile another type of file")
+		assert(string.find(file,FileExtension), "Attempt to compile another type of file")
 		x = io.open(file)
 		code = x:read("*all")
 		x:close()
@@ -309,7 +312,7 @@ LuaCC = {
 	Execute = function(file)
 		assert(file, "The code must be a non-nil value")
 		assert(type(file) == "string", "Attempt to compile a non-string value")
-		assert(string.find(file,".luacc"), "Attempt to execute another type of file")
+		assert(string.find(file,FileExtension, "Attempt to execute another type of file")
 		x = io.open(file)
 		code = x:read("*all")
 		x:close()
