@@ -27,7 +27,7 @@ local LuaCCDecode = function(Code)
 	--Change the values down here
 	local Syntax = {
 	   ["IF"] = "if",
-       ["FUNCTION"] = "function",
+           ["FUNCTION"] = "function",
 	   ["DO"] = "do",
 	   ["THEN"] = "then",
 	   ["WHILE"] = "while",
