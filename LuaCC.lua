@@ -5,7 +5,8 @@ require'LuaMinify'
 local LuaCCDecode = function(Code)
 	assert(Code, "The code must be a non-nil value")
 	assert(type(Code) == "string", "Attempt to compile a non-string value")
-	local Classes = {
+	
+	Classes = {
 	   bool = function(x)
 	      return x ~= nil and x ~= false
 	   end;
@@ -24,7 +25,7 @@ local LuaCCDecode = function(Code)
 	};
 		
 	--Change the values down here
-	Syntax = {
+	local Syntax = {
 	   ["IF"] = "if",
        ["FUNCTION"] = "function",
 	   ["DO"] = "do",
@@ -57,6 +58,7 @@ local LuaCCDecode = function(Code)
 	local CaseSensitive = true
 	local UnaryOperators = true
 	local AgumentedOperators = true
+	local VariableClasses = true
 	local Minify = false
 						
 	local BuiltIn = [[  ]]
@@ -226,10 +228,10 @@ local LuaCCDecode = function(Code)
 			end
 											
 		-- Specific classes
-		elseif l == ":" then
+		elseif l == ":" and VariableClasses then
 			for j = 1, Compiled:len() do
 				if loadstring("x=(" .. Compiled:sub(j) .. ")") then
-					Compiled = Compiled:sub(1, j - 1) .. "CLua.Classes." .. preCompiled[i + 1] .. "(" .. Compiled:sub(j) .. ")"
+					Compiled = Compiled:sub(1, j - 1) .. "Classes." .. preCompiled[i + 1] .. "(" .. Compiled:sub(j) .. ")"
 					preCompiled[i + 1] = nil
 					break
 				end
@@ -320,5 +322,5 @@ LuaCC = {
 }
 mt = {__metatable = true}
 setmetatable(LuaCC,mt)
-											
+
 return LuaCC
