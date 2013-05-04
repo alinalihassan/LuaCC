@@ -276,7 +276,7 @@ local LuaCCDecode = function(Code)
 		if Minify == true then
 			_,minified = LuaMinify(Compiled)
 		else
-			minified = autoFormat(Compiled)
+			minified = Compiled
 		end
 		return minified, print("The code have been succesfully compiled")
 	else
