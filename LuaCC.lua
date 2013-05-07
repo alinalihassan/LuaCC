@@ -27,28 +27,29 @@ local LuaCCDecode = function(Code)
 		
 	--Change the values down here
 	local Syntax = {
-	   ["if"] = "if",
-       ["function"] = "function",
-	   ["do"] = "do",
-	   ["then"] = "then",
-	   ["while"] = "while",
-	   ["nil"] = "nil",
-	   ["not"] = "not",
-	   ["and"] = "and",
-	   ["or"] = "or",
-	   ["local"] = "local",
-	   ["_G."] = "_G.",
-	   ["true"] = "true",
-	   ["false"] = "false",
-	   ["break"] = "break",
-	   ["else"] = "else",
-	   ["elseif"] = "elseif",
-	   ["for"] = "for",
-	   ["repeat"] = "repeat",
-	   ["return"] = "return",
-	   ["require"] = "require",
-	   ["in"] = "in",
-	   ["until"] = "until",
+	   ["if"] = "if";
+    	   ["function"] = "function";
+	   ["do"] = "do";
+	   ["then"] = "then";
+	   ["while"] = "while";
+	   ["nil"] = "nil";
+	   ["not"] = "not";
+	   ["and"] = "and";
+	   ["or"] = "or";
+	   ["local"] = "local";
+	   ["_G."] = "_G.";
+	   ["true"] = "true";
+	   ["false"] = "false";
+	   ["break"] = "break";
+	   ["else"] = "else";
+	   ["elseif"] = "elseif";
+	   ["for"] = "for";
+	   ["repeat"] = "repeat";
+	   ["return"] = "return";
+	   ["require"] = "require";
+	   ["in"] = "in";
+	   ["until"] = "until";
+	   ["print"] = "print";
 	}
 	local Types = {
 	   ["string"] = true;
@@ -141,12 +142,17 @@ local LuaCCDecode = function(Code)
 		Compiled = Compiled .. " "
 		if l then
 		
-		for i,v in pairs(Syntax) do
+		for n,v in pairs(Syntax) do
+			if l == n and n~= v then error("An error have occured while compiling") end --Anti-Lua Syntax
 			if l == v then
-			   if i == Syntax["function"] then
+			   if n == Syntax["function"] then
 			   		isFunc = true
+		   	   elseif n == Syntax["while"] or n == Syntax["for"] then
+		   			isDo = true
+	   	 	   elseif n == Syntax["if"] or n == Syntax["elseif"] or n == Syntax["else"] then
+	   	   			isThen = true
 			   end	
-			   l = i
+			   l = n
 			end
 		end	
 											
