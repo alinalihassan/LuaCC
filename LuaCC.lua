@@ -50,6 +50,7 @@ local LuaCCDecode = function(Code)
 	   ["in"] = "in";
 	   ["until"] = "until";
 	   ["print"] = "print";
+	   ["assert"] = "assert";
 	}
 	local Types = {
 	   ["string"] = true;
@@ -144,6 +145,7 @@ local LuaCCDecode = function(Code)
 		
 		for n,v in pairs(Syntax) do
 			if l == n and n~= v then error("An error have occured while compiling") end --Anti-Lua Syntax
+			if CaseSensitive == false then l = l:lower() v = v:lower() end
 			if l == v then
 			   if n == Syntax["function"] then
 			   		isFunc = true
