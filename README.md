@@ -3,7 +3,7 @@ LuaCC
 -------
 
 - LuaCC is a lightweight lua compiler compiler/ parse generator for Lua, a lightweight C derived language;
-- LuaCC is WIP ( Work In Progress);
+- LuaCC is a WIP( Work In Progress);
 - LuaCC work just with Lua 5.1+;
 
 Features
