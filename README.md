@@ -1,3 +1,5 @@
+This project is dead, because of the bugs that idk how to fix
+
 LuaCC
 =====
 -------
