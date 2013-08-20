@@ -25,7 +25,9 @@ Features
 - You can use operators for other Lua Types(OPTIONAL)
 - You can use the C's conditional or change it to your very own (a ? b : c)(OPTIONAL)
 - You can set a programming language extension
-- You can set strict variable types in functions like in C
+- You can set strict variable types in functions like in C/C++
+- You can set your own variables
+- You can start a function using { } like in C/C++
 
 
 
